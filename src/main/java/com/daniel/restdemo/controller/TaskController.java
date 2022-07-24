@@ -5,8 +5,10 @@ import com.daniel.restdemo.persistence.entity.TaskStatus;
 import com.daniel.restdemo.service.TaskService;
 import com.daniel.restdemo.service.dto.TaskInDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.http.HttpResponse;
 import java.util.List;
 
 @RestController
@@ -29,6 +31,12 @@ public class TaskController {
     @GetMapping("/status/{status}")
     public List<Task> findAllByTaskStatus(@PathVariable("status") TaskStatus status){
         return this.taskService.findAllByTaskStatus(status);
+    }
+
+    @PatchMapping("/mark_as_finished/{id}")
+    public ResponseEntity<Void> markAsFinished(@PathVariable("id") Long id){
+        this.taskService.updateTaskAsFinished(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
