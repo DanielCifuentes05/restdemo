@@ -45,4 +45,13 @@ public class TaskService {
         this.repository.markTaskAsFinished(id);
     }
 
+    public void deleteTask(Long id){
+
+        if(this.repository.findById(id).isEmpty()){
+            throw new TaskExceptions("Task not found", HttpStatus.NOT_FOUND);
+        }
+
+        this.repository.deleteById(id);
+    }
+
 }
